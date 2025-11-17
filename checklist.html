@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>청소년 상담 체크리스트</title>
+  <style>
+    body {
+      font-family: "Pretendard", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 0 16px;
+      line-height: 1.5;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .description {
+      font-size: 0.95rem;
+      color: #444;
+      margin-bottom: 20px;
+    }
+    .question {
+      margin: 10px 0 4px;
+      font-weight: 600;
+    }
+    select {
+      width: 100%;
+      padding: 6px;
+      margin-bottom: 8px;
+    }
+    button {
+      margin-top: 16px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    #result {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 6px;
+      background-color: #f3f3f3;
+    }
+    #result h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>청소년 상담 체크리스트</h1>
+  <div class="description">
+    최근 2주를 떠올리며, 각 문항에 가장 가까운 정도를 선택하는 간단한 자기점검 도구이다<br>
+    0점: 전혀 아니다 / 1점: 가끔 그렇다 / 2점: 자주 그렇다 / 3점: 거의 항상 그렇다
+  </div>
+
+  <form id="checklistForm">
+    <div class="question">1. 요즘 학교생활이 전반적으로 힘들게 느껴진다</div>
+    <select name="q1">
+      <option value="0">0점 - 전혀 아니다</option>
+      <option value="1">1점 - 가끔 그렇다</option>
+      <option value="2">2점 - 자주 그렇다</option>
+      <option value="3">3점 - 거의 항상 그렇다</option>
+    </select>
+
+    <div class="question">2. 잠이 잘 오지 않거나 너무 많이 잔다</div>
+    <select name="q2">
+      <option value="0">0점 - 전혀 아니다</option>
+      <option value="1">1점 - 가끔 그렇다</option>
+      <option value="2">2점 - 자주 그렇다</option>
+      <option value="3">3점 - 거의 항상 그렇다</option>
+    </select>
+
+    <div class="question">3. 친구 관계에서 스트레스나 갈등이 자주 있다</div>
+    <select name="q3">
+      <option value="0">0점 - 전혀 아니다</option>
+      <option value="1">1점 - 가끔 그렇다</option>
+      <option value="2">2점 - 자주 그렇다</option>
+      <option value="3">3점 - 거의 항상 그렇다</option>
+    </select>
+
+    <div class="question">4. 부모(보호자)와 대화가 잘 되지 않는다고 느낀다</div>
+    <select name="q4">
+      <option value="0">0점 - 전혀 아니다</option>
+      <option value="1">1점 - 가끔 그렇다</option>
+      <option value="2">2점 - 자주 그렇다</option>
+      <option value="3">3점 - 거의 항상 그렇다</option>
+    </select>
+
+    <div class="question">5. 이유 없이 짜증이 나거나 화가 치밀 때가 많다</div>
+    <select name="q5">
+      <option value="0">0점 - 전혀 아니다</option>
+      <option value="1">1점 - 가끔 그렇다</option>
+      <option value="2">2점 - 자주 그렇다</option>
+      <option value="3">3점 - 거의 항상 그렇다</option>
+    </select>
+
+    <div class="question">6. 최근 2주 동안 우울하거나 의욕이 없었던 날이 많다</div>
+    <select name="q6">
+      <option value="0">0점 - 전혀 아니다</option>
+      <option value="1">1점 - 가끔 그렇다</option>
+      <option value="2">2점 - 자주 그렇다</option>
+      <option value="3">3점 - 거의 항상 그렇다</option>
+    </select>
+
+    <div class="question">7. 휴대폰·게임·SNS 때문에 생활 리듬이 많이 깨져 있다</div>
+    <select name="q7">
+      <option value="0">0점 - 전혀 아니다</option>
+      <option value="1">1점 - 가끔 그렇다</option>
+      <option value="2">2점 - 자주 그렇다</option>
+      <option value="3">3점 - 거의 항상 그렇다</option>
+    </select>
+
+    <div class="question">8. 스스로에 대해 “나는 쓸모없다”는 생각이 들 때가 있다</div>
+    <select name="q8">
+      <option value="0">0점 - 전혀 아니다</option>
+      <option value="1">1점 - 가끔 그렇다</option>
+      <option value="2">2점 - 자주 그렇다</option>
+      <option value="3">3점 - 거의 항상 그렇다</option>
+    </select>
+
+    <button type="submit">점수 계산하기</button>
+  </form>
+
+  <div id="result" style="display:none;">
+    <h2>결과</h2>
+    <p id="scoreText"></p>
+    <p id="levelText"></p>
+    <p id="commentText"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById("checklistForm");
+    const resultBox = document.getElementById("result");
+    const scoreText = document.getElementById("scoreText");
+    const levelText = document.getElementById("levelText");
+    const commentText = document.getElementById("commentText");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      let totalScore = 0;
+      const formData = new FormData(form);
+
+      for (const [key, value] of formData.entries()) {
+        totalScore += Number(value);
+      }
+
+      scoreText.textContent = `총점: ${totalScore}점 (최대 24점)`;
+
+      let level = "";
+      let comment = "";
+
+      if (totalScore <= 8) {
+        level = "전반적으로 큰 어려움은 적은 편으로 해석되는 수준이다";
+        comment = "그래도 청소년의 생활변화, 수면·기분 변화를 계속 관찰하며 일상적인 대화를 유지하는 것이 중요하다";
+      } else if (totalScore <= 16) {
+        level = "일상에서 느끼는 스트레스가 다소 높은 편으로 해석되는 수준이다";
+        comment = "구체적인 힘든 지점을 함께 이야기해 보고, 담임·상담교사·상담센터 등과의 상담 연결을 고려하는 것이 도움이 될 수 있다";
+      } else {
+        level = "정서·관계 영역에서 어려움이 클 수 있어 상담과 전문적인 평가를 고려할 수준이다";
+        comment = "가능하면 청소년상담복지센터, 학교 상담실 등 전문기관과의 상담을 조기에 연계하는 것이 필요하다";
+      }
+
+      levelText.textContent = `위험 수준: ${level}`;
+      commentText.textContent = comment;
+      resultBox.style.display = "block";
+    });
+  </script>
+</body>
+</html>
